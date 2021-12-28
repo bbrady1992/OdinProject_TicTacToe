@@ -43,6 +43,10 @@ const gameboard = (function () {
     );
   };
 
+  const boardFull = () => {
+    return _board.every((s) => s !== "");
+  };
+
   document.querySelector("#reset-button").addEventListener("click", () => {
     console.log("RESETTING GAMEBOARD");
     for (let i = 0; i < _board.length; ++i) {
@@ -57,6 +61,7 @@ const gameboard = (function () {
     renderBoard,
     playerWins,
     setSquareMark,
+    boardFull,
   };
 })();
 
@@ -106,6 +111,9 @@ const game = (function () {
           ].getMark()} wins!`;
           _gamesWon[_activePlayerIndex] += 1;
           renderPlayerInfo();
+        } else if (gameboard.boardFull()) {
+          _gameWon = true;
+          document.querySelector("#win-banner").textContent = "Tie";
         }
         _changeActivePlayer();
       }
